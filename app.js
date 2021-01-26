@@ -10,11 +10,13 @@ const app = express();
 
 
 // https://docs.google.com/spreadsheets/d/1ZNcIoBT-fomDFMaOnX3qYEcQLk82zZwHZRSv0MhdPqw/edit#rangeid=968169635
-mongoose.connect('LINK_TO_GENERATE',
+mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cicv1.rxeit.mongodb.net/ciceronetrainer?retryWrites=true&w=majority`,
   { useNewUrlParser: true,
-    useUnifiedTopology: true })
+    useUnifiedTopology: true,
+    useCreateIndex: true  
+  })
   .then(() => console.log('Connexion à MongoDB réussie !'))
-  .catch(() => console.log('Connexion à MongoDB échouée !'));
+  .catch(error => console.log('Échec:', error));
 
 // Autorise requêtes externes
 app.use((req, res, next) => {
