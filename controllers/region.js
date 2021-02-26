@@ -1,5 +1,4 @@
 const Region = require('../models/region');
-// const fs = require('fs');
 
 exports.index = (req, res, next) => {
   Region.find()
@@ -17,11 +16,8 @@ exports.create = (req, res, next) => {
 };
 
 exports.update = (req, res, next) => {
-  const regionObject = { 
-    ...req.body 
-  };
-  Region.updateOne({ _id: req.params.id }, { ...regionObject })
-    .then(() => res.status(200).json({ region: regionObject }))
+  Region.updateOne({ _id: req.params.id }, { ...req.body })
+    .then(() => res.status(200).json({ region: req.body }))
     .catch(error => res.status(400).json({ error }));
 };
 
@@ -31,18 +27,8 @@ exports.destroy = (req, res, next) => {
     .catch(error => res.status(400).json({ error }));
 };
 
-// exports.getOneThing = (req, res, next) => {
-//   Thing.findOne({
-//     _id: req.params.id
-//   }).then(
-//     (thing) => {
-//       res.status(200).json(thing);
-//     }
-//   ).catch(
-//     (error) => {
-//       res.status(404).json({
-//         error: error
-//       });
-//     }
-//   );
-// };
+// exports.show = (req, res, next) => {
+//   Region.findOne({ _id: req.params.id })
+//     .then(region => res.status(200).json(region))
+//     .catch(error => res.status(404).json({ error}))
+// }
