@@ -3,6 +3,11 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose')
 const path = require('path')
 
+const alcoholTitleRoutes = require('./routes/alcoholTitle');
+const beerCategoryRoutes = require('./routes/beerCategory');
+const beerColorRoutes = require('./routes/beerColor');
+const beerTypeRoutes = require('./routes/beerType');
+const bitternessRoutes = require('./routes/bitterness');
 const regionRoutes = require('./routes/region');
 const userRoutes = require('./routes/user');
 
@@ -30,12 +35,17 @@ app.use((req, res, next) => {
 
 // Parse requêtes en JSON
 app.use(express.json());
-app.use(express.text());
+// app.use(express.text());
 
 // app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use('/api/auth', userRoutes);
-app.use('/api/region', regionRoutes)
+app.use('/api/region', regionRoutes);
+app.use('/api/alcohol_title', alcoholTitleRoutes);
+app.use('/api/beer_category', beerCategoryRoutes);
+app.use('/api/beer_color', beerColorRoutes);
+app.use('/api/bitterness', bitternessRoutes);
+app.use('/api/beer_type', beerTypeRoutes);
 app.use('/', (req, res, next) => {
   res.status(200).json({message: "Bienvenue sur l'api de CicTrainer"})
 })
