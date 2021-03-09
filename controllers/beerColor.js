@@ -2,7 +2,10 @@ const BeerColor = require('../models/beerColor')
 
 exports.index = (req, res, next) => {
   BeerColor.find()
-    .then(beerColors => {res.status(200).json(beerColors)})
+    .then(beerColors => {
+      res.status(200).json(beerColors.sort())
+      console.log('beerColors', beerColors)
+    })
     .catch(error => { res.status(400).json({ error: error }) })
 }
 

@@ -9,18 +9,18 @@ const mongoose = require('mongoose');
 const beerTypeSchema = mongoose.Schema({
   name: { type: String, required: true },
   country: { type: mongoose.Schema.Types.ObjectId, ref: 'Region', required: true },
-  category: {type: mongoose.Schema.Types.ObjectId, ref: 'BeerCategory', required: true },
+  category: {type: mongoose.Schema.Types.ObjectId, ref: 'BeerCategory'},
   bitterness: {
     min: { type: mongoose.Schema.Types.ObjectId, ref: 'Bitterness', required: true },
-    max: { type: mongoose.Schema.Types.ObjectId, ref: 'Bitterness', required: true }
+    max: { type: mongoose.Schema.Types.ObjectId, ref: 'Bitterness' }
   },
   alcoholTitle: {
     min: { type: mongoose.Schema.Types.ObjectId, ref: 'AlcoholTitle', required: true },
-    max: { type: mongoose.Schema.Types.ObjectId, ref: 'AlcoholTitle', required: true }
+    max: { type: mongoose.Schema.Types.ObjectId, ref: 'AlcoholTitle' }
   },
   color: {
     min: { type: mongoose.Schema.Types.ObjectId, ref: 'BeerColor', required: true },
-    max: { type: mongoose.Schema.Types.ObjectId, ref: 'BeerColor', required: true }
+    max: { type: mongoose.Schema.Types.ObjectId, ref: 'BeerColor' }
   }
 });
 

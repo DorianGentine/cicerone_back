@@ -1,8 +1,10 @@
 const BeerCategory = require('../models/beerCategory')
 
 exports.index = (req, res, next) => {
-  BeerCategory.find()
-    .then(beerCategories => {res.status(200).json(beerCategories)})
+  BeerCategory.find().sort({"name":1})
+    .then(beerCategories => {
+      res.status(200).json(beerCategories)
+    })
     .catch(error => { res.status(400).json({ error: error }) })
 }
 
