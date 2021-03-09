@@ -1,8 +1,10 @@
 const Bitterness = require('../models/bitterness')
 
 exports.index = (req, res, next) => {
-  Bitterness.find()
-    .then(bitternesss => {res.status(200).json(bitternesss)})
+  Bitterness.find().sort()
+    .then(bitternesss => {
+      res.status(200).json(bitternesss.sort())
+    })
     .catch(error => { res.status(400).json({ error: error }) })
 }
 

@@ -1,8 +1,18 @@
 const Region = require('../models/region');
 
 exports.index = (req, res, next) => {
+  const compare = (a,b) => {
+    if ( a.name < b.name ){
+      return -1;
+    }
+    if ( a.name > b.name ){
+      return 1;
+    }
+    return 0;
+  }
+
   Region.find()
-    .then(regions => { res.status(200).json(regions)})
+    .then(regions => { res.status(200).json(regions.sort(compare))})
     .catch(error => { res.status(400).json({ error: error})})
 };
 

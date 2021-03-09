@@ -2,7 +2,9 @@ const AlcoholTitle = require('../models/alcoholTitle')
 
 exports.index = (req, res, next) => {
   AlcoholTitle.find()
-    .then(alcoholTitles => {res.status(200).json(alcoholTitles)})
+    .then(alcoholTitles => {
+      res.status(200).json(alcoholTitles.sort())
+    })
     .catch(error => { res.status(400).json({ error: error }) })
 }
 
