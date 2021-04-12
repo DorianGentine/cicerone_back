@@ -9,7 +9,7 @@ exports.index = (req, res, next) => {
     .populate("alcoholTitle.max", "-__v")
     .populate("bitterness.min", "-__v")
     .populate("bitterness.max", "-__v")
-    .then(async beerTypes => {
+    .then(beerTypes => {
       res.status(200).json(beerTypes)
     })
     .catch(error => { res.status(400).json({ error: error }) })
