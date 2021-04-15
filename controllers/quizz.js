@@ -1,10 +1,22 @@
 const BeerType = require('../models/beerType')
 const Region = require('../models/region')
 const Color = require('../models/beerColor')
+const AlcoholTitle = require('../models/alcoholTitle')
+const Category = require('../models/beerCategory')
+const Bitterness = require('../models/bitterness')
 
-async function defineQuestion(id, model, modelTitle){
+async function defineQuestion(){
+  const models = [
+    {model: Color, modelTitle: "color"},
+    {model: Region, modelTitle: "country"},
+    {model: AlcoholTitle, modelTitle: "alcoholTitle"},
+    {model: Category, modelTitle: "category"},
+    {model: Bitterness, modelTitle: "bitterness"}
+  ]
+  const randomModel = models[Math.floor(Math.random() * 5)]
+
   const defineModelTitle = () => {
-    switch(modelTitle){
+    switch(randomModel.modelTitle){
       case 'color':
         return "color.min color.max"
       case 'alcoholTitle':
@@ -12,12 +24,12 @@ async function defineQuestion(id, model, modelTitle){
       case 'bitterness':
         return "bitterness.min bitterness.max"
       default:
-        return modelTitle
+        return randomModel.modelTitle
     }
   }
 
   const defineText = beer => {
-    switch(modelTitle){
+    switch(randomModel.modelTitle){
       case 'country':
         return `Quelle est la région d'origine de la ${beer.name} ?`
       case 'category':
@@ -29,20 +41,20 @@ async function defineQuestion(id, model, modelTitle){
       case 'bitterness':
         return `De quelle amertume est la ${beer.name} ?`
       default:
-        return modelTitle
+        return randomModel.modelTitle
     }
   }
 
   return promise = new Promise((resolve, reject) => {
-    BeerType.findById(id)
+    BeerType.find()
     .populate(defineModelTitle(), "-__v")
-    .then(beer => {
-      console.log(`beer`, beer)
-      model.find()
+    .then(beers => {
+      const beer = beers[Math.floor(Math.random() * beers.length)]
+      randomModel.model.find()
       .then(models => {
         let question = {
           content: defineText(beer),
-          answer: beer[modelTitle],
+          answer: beer[randomModel.modelTitle],
           options: models
         }
         resolve(question)
@@ -53,8 +65,7 @@ async function defineQuestion(id, model, modelTitle){
 }
 
 exports.index = async (req, res, next) => {
-    const question = await defineQuestion("603e371a3cb18e422c8771c7", Color, "color")
-    console.log(`question`, question)
+    const question = await defineQuestion()
     res.status(200).json(question)
 }
 
